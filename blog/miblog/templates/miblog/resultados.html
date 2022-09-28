@@ -1,0 +1,9 @@
+{% extends "miblog/base.html" %}
+{% load static %}
+{% block micontenido %}
+<h3>Categorias encontradas:</h3>
+{% for categoria in categorias %}
+<ul>{{categoria.titulo}}</ul>
+
+{% endfor %}
+{% endblock %}
