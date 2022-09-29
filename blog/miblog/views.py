@@ -12,8 +12,11 @@ def formulario1(request):
     if request.method=='POST':
         formulario1 = FormularioPost(request.POST)
         if formulario1.is_valid():
+            # print(request.GET['categoria_id'])
             info = formulario1.cleaned_data
-            postf = Post(titulo=info["titulo"], contenido=info['contenido'])
+            
+            postf = Post(titulo=info["titulo"], descripcion = info['descripcion'],contenido=info['contenido'], categoria_id=request.POST['categoria_id'])
+            # print(info['categoria_id'])
             postf.save()
             return render(request,"miblog/index.html")
     else:
