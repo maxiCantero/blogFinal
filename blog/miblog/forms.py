@@ -7,7 +7,8 @@ class FormularioPost(forms.Form):
     contenido = forms.CharField(widget=forms.Textarea(attrs={'style':'width:20em'}))
     categoria_id = forms.ModelChoiceField(queryset = Categoria.objects.all(),widget=forms.Select(attrs={'style':'width:20em'}))
     # autor = forms.ForeignKey(Autor, on_delete=forms.CASCADE)
-
+class FormularioSearch(forms.Form):
+    pass
 class FormularioCategoria(forms.Form):
     titulo = forms.CharField()
 

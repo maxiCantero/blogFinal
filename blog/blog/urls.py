@@ -19,10 +19,10 @@ from miblog.views import *
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("blog/", post),
-    path("form1/",formulario1),
-    path("form2/",formulario2),
+    path("blog/", post, name="Home"),
+    path("form1/",formulario1, name="FormNewPost"),
+    path("form2/",formulario2, name="FormNewCategory"),
     path("form3/",formulario3),
-    path("buscarCategoria/",busquedaCategoria),
+    path("buscarCategoria/",busqueda),
     path("buscar/",buscar),
 ]

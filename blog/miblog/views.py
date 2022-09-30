@@ -4,7 +4,14 @@ from miblog.forms import *
 from django.http import HttpResponse
 
 def post(request):
-    posteo = Post.objects.all()
+    if request.method=='GET':
+        posteo = Post.objects.all()
+        # search = request.GET['titulo']
+        # posteo = Post.objects.filter(titulo__startswith=search)
+    else:
+        pass
+        
+
     categoria = Categoria.objects.all()
     return render(request,"miblog/posts.html",{"posteo":posteo,"categoria":categoria})
 
@@ -47,13 +54,16 @@ def formulario3(request):
         formulario3 = FormularioAutor()
     return render(request,"miblog/formu3.html",{"form3":formulario3})
 
-def busquedaCategoria(request):
-    return render(request,"miblog/busquedaCategoria.html")
+def busqueda(request):
+    pass
 
 def buscar(request):
+    categoria = Categoria.objects.all()
     if request.GET["titulo"]:
         busqueda = request.GET["titulo"]
-        categorias = Categoria.objects.filter(titulo__icontains=busqueda)
-        return render(request,"miblog/resultados.html",{"categorias":categorias})
+        posteo = Post.objects.filter(titulo__icontains=busqueda)
+        return render(request,"miblog/posts.html",{"posteo":posteo,"categoria":categoria})
     else:
-        return render(request,"miblog/index1.html")
+        posteo = Post.objects.all()
+        print("paso por todo")
+        return render(request,"miblog/posts.html",{"posteo":posteo,"categoria":categoria})

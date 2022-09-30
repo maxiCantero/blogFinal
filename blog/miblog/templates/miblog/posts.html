@@ -85,15 +85,21 @@
                 <div class="card-header">Search</div>
                 <div class="card-body">
                     <div class="input-group">
-                        <input class="form-control" type="text" placeholder="Enter search term..."
-                            aria-label="Enter search term..." aria-describedby="button-search" />
-                        <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                        <form action="/buscar/" method="GET">
+                            <input class="form-control" type="text" placeholder="Enter search term..."
+                                aria-label="Enter search term..." aria-describedby="button-search" name="titulo"
+                                id="titulo" />
+                            <input class="btn btn-primary" id="button-search" type="submit" value="Buscar"></input>
+                        </form>
                     </div>
                 </div>
             </div>
             <!-- Categories widget-->
             <div class="card mb-4">
-                <div class="card-header">Categories</div>
+                <div class="card-header">Categories
+                    <div style="display: inline;margin-left: 10em;"><a href="{% url 'FormNewCategory' %}"> Nueva
+                            Categoria</a></div>
+                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6">
