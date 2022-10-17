@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block micontenido %}
+
+{% for posteos in posteo %}
+{% if user.is_authenticated %}
+<ul class="nav">
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'EditarPost' posteos.id %}">Editar</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{% url 'EliminarPost' posteos.id %}">Eliminar</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+    </li>
+</ul>
+{% endif %}
+
+{{posteos.contenido|safe}}
+{% endfor %}
+
+
+{% endblock %}

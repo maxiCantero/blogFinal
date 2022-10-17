@@ -1,0 +1,74 @@
+<!-- PAGINACION EN DJANGO: https://www.desarrollolibre.net/blog/django/paginacion-de-tablas-registros-en-django-empleando-bootstrap-4-o-5#:~:text=Paginaci%C3%B3n%20en%20Django%20En%20Django%20tenemos%20una%20clase,registros%20%28tama%C3%B1o%20de%20la%20p%C3%A1gina%205%29%2010%2C%20etc. -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script type="text/javascript" src="{% static  'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Blog Home - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'miblog/assets/favicon.ico' %}" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'miblog/css/styles.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'Home' %}">MI BLOG</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'FormNewPost' %}">Nueva entrada</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'Home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'About' %}">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link active" aria-current="page"
+                            href="{% url 'logout' %}?next={{request.path}}">Log
+                            out</a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link active" aria-current="page"
+                            href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Page header with logo and tagline-->
+    <header class="py-2 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">Bienvenido a mi Blog!</h1>
+                <p class="lead mb-0">Mi blog hecho con un template de StartBootstrap</p>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        {% block micontenido %}
+        {% endblock %}
+    </div>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="{% static 'miblog/js/scripts.js' %}"></script>
+</body>
+
+</html>

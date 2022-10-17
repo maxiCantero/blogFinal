@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block micontenido %}
+
+<h2>Ingreso de nuevo Post</h2>
+<form action="" method="POST">{% csrf_token %}
+    <table>
+        {{form1.as_table}}
+
+    </table>
+    <input type="submit" value="Enviar">
+    {{Post.contenido|safe}}
+</form>
+
+{% endblock %}
