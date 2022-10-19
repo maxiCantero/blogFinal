@@ -4,7 +4,8 @@ from miblog.forms import *
 from django.http import HttpResponse
 from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
 
 # class PostDetalle(DetailView):
 #     model = Post
@@ -32,7 +33,7 @@ def post(request):
 
 def detail(request, id):
     posteo = Post.objects.filter(id__icontains=id)
-    print(posteo)
+
     return render(request, "miblog/detalle.html", {"posteo": posteo})
 
 
@@ -42,13 +43,13 @@ def addPost(request):
         formulario1 = FormularioPost(request.POST)
         if formulario1.is_valid():
             info = formulario1.cleaned_data
-            # print(info["contenido"])
+
             cadena = info["contenido"]
 
             # TITULO
             title_end = cadena.find("</h1>")
             title = cadena[4:title_end]
-            print(title)
+
             # DESCRIPCION
             desc_init = cadena.find("<p>")
             desc_end = cadena.find("</p>")
@@ -97,7 +98,7 @@ def editarPost(request, id):
             # TITULO
             title_end = cadena.find("</h1>")
             title = cadena[4:title_end]
-            print(title)
+
             # DESCRIPCION
             desc_init = cadena.find("<p>")
             desc_end = cadena.find("</p>")
@@ -125,26 +126,13 @@ def editarPost(request, id):
                 request, "miblog/posts.html", {"posteo": posteo, "categoria": categoria}
             )
     else:
-        formulario1 = FormularioPost(initial={"contenido": post.contenido})
+
+        formulario1 = FormularioPost(
+            initial={"contenido": post.contenido, "categoria": post.categoria}
+        )
+        print(post.contenido)
 
     return render(request, "miblog/editarPost.html", {"form1": formulario1})
-
-
-@login_required()
-def addCategoria(request):
-    if request.method == "POST":
-        nuevaCategoria = FormularioCategoria(request.POST)
-        if nuevaCategoria.is_valid():
-            info = formulario2.cleaned_data
-            categoriaf = Categoria(titulo=info["titulo"])
-            categoriaf.save()
-            return addPost(request)
-    else:
-        nuevaCategoria = FormularioCategoria()
-
-    return render(
-        request, "miblog/addCategoria.html", {"nuevaCategoria": nuevaCategoria}
-    )
 
 
 @login_required()
@@ -155,6 +143,28 @@ def borrarPost(request, id):
     categoria = Categoria.objects.all()
     return render(
         request, "miblog/posts.html", {"posteo": posteo, "categoria": categoria}
+    )
+
+
+@login_required()
+def addCategoria(request):
+    if request.method == "POST":
+        nuevaCategoria = FormularioCategoria(request.POST)
+        if nuevaCategoria.is_valid():
+            info = nuevaCategoria.cleaned_data
+            categoriaf = Categoria(titulo=info["titulo"])
+            categoriaf.save()
+
+            categoria = Categoria.objects.all()
+            posteo = Post.objects.all()
+            return render(
+                request, "miblog/posts.html", {"posteo": posteo, "categoria": categoria}
+            )
+    else:
+        nuevaCategoria = FormularioCategoria()
+
+    return render(
+        request, "miblog/addCategoria.html", {"nuevaCategoria": nuevaCategoria}
     )
 
 
@@ -178,17 +188,41 @@ def busqueda(request):
 
 def buscar(request):
     categoria = Categoria.objects.all()
+
     if request.GET["titulo"]:
         busqueda = request.GET["titulo"]
         posteo = Post.objects.filter(titulo__icontains=busqueda)
         return render(
             request, "miblog/posts.html", {"posteo": posteo, "categoria": categoria}
         )
+
     else:
         posteo = Post.objects.all()
         return render(
             request, "miblog/posts.html", {"posteo": posteo, "categoria": categoria}
         )
+
+
+def registro(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+            usuario = authenticate(
+                username=request.POST["username"],
+                password=request.POST["password1"],
+            )
+            login(request, usuario)
+        posteo = Post.objects.all()
+        categoria = Categoria.objects.all()
+        return render(
+            request, "miblog/posts.html", {"posteo": posteo, "categoria": categoria}
+        )
+    else:
+        form = UserCreationForm()
+
+    return render(request, "miblog/registro.html", {"form": form})
 
 
 def about(request):

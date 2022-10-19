@@ -28,15 +28,10 @@ urlpatterns = [
     path("form3/", formulario3),
     path("buscar/", buscar),
     path("about/", about, name="About"),
+    path("registro/", registro, name="Registro"),
 ]
 urlpatterns += [
     path("accounts/", include("django.contrib.auth.urls")),
     path("accounts/login/", include("django.contrib.auth.urls"), name="login"),
     path("accounts/logout/", include("django.contrib.auth.urls"), name="logout"),
-    # path("accounts/password_change", include('django.contrib.auth.urls'), name="password_change"),
-    # path("accounts/password_change/done/",include('django.contrib.auth.urls'), name="password_change_done"),
-    # path("accounts/password_reset/",include('django.contrib.auth.urls'), name="password_reset"),
-    # path("accounts/password_reset/done/", include('django.contrib.auth.urls'), name="password_reset_done"),
-    # path("accounts/reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/", include('django.contrib.auth.urls'), name="password_reset_confirm"),
-    # path("accounts/reset/done/", include('django.contrib.auth.urls'), name="password_reset_complete"),
 ]

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link href="{% static 'miblog/css/log.css' %}" rel="stylesheet" />
+</head>
+
+<!-- <body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit"> Registrar</button>
+    </form>
+</body> -->
+
+<body>
+    <div id="clouds">
+        <div class="cloud x1"></div>
+
+        <div class="cloud x2"></div>
+        <div class="cloud x3"></div>
+        <div class="cloud x4"></div>
+        <div class="cloud x5"></div>
+    </div>
+
+    <div class="container">
+
+
+        <div id="login">
+
+            <form method="post">
+                {% csrf_token %}
+
+                <fieldset class=" clearfix">
+
+                    <p><span class="fontawesome-user"></span>{{form.username}}</p>
+                    Password:
+                    <p><span class="fontawesome-lock"></span>{{ form.password1 }}</p>
+                    Repita el Password:
+                    <p><span class="fontawesome-lock"></span>{{ form.password2 }}</p>
+
+
+                    <p><input type="submit" value="Registrar"></p>
+                    <!-- <input type="hidden" name="next" value="{{ next }}" /> -->
+                </fieldset>
+
+            </form>
+
+
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
